@@ -67,6 +67,7 @@ class SelectorBIC(ModelSelector):
     http://www2.imm.dtu.dk/courses/02433/doc/ch6_slides.pdf
     Bayesian information criteria: BIC = -2 * logL + p * logN
     p is the number of estimated parameters.
+    How to compute 'p'? https://stats.stackexchange.com/questions/12341/number-of-parameters-in-markov-model
     N is the number of samples.
     """
 
