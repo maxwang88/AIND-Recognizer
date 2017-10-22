@@ -66,6 +66,8 @@ class SelectorBIC(ModelSelector):
 
     http://www2.imm.dtu.dk/courses/02433/doc/ch6_slides.pdf
     Bayesian information criteria: BIC = -2 * logL + p * logN
+    p is the number of estimated parameters.
+    N is the number of samples.
     """
 
     def select(self):
