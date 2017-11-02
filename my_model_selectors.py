@@ -89,7 +89,14 @@ class SelectorBIC(ModelSelector):
                 # transition probs = (number of states) * (number of states - 1)
                 # emission probs = (number of states) * (number of features) * 2, since this is gaussian hmm, 
                 # two variables for each feature in each state represent mean and variance.
-                p = len(self.X[0]) * n_component * 2 + n_component * (n_component - 1)
+
+                #######Correction#######
+                # "Free parameters" are parameters that are learned by the model and it is a sum of:
+                # 1. The free transition probability parameters, which is the size of the transmat matrix less one row because they add up to 1 and therefore the final row is deterministic, so `n*(n-1)`
+                # 2. The free starting probabilities, which is the size of startprob minus 1 because it adds to 1.0 and last one can be calculated so `n-1`
+                # 3. Number of means, which is `n*f`
+                # 4. Number of covariances which is the size of the covars matrix, which for "diag" is `n*f`
+                p = len(self.X[0]) * n_component * 2 + n_component * (n_component - 1) + (n_component - 1)
                 logL = self.base_model(n_component).score(self.X, self.lengths)
                 BIC = -2 * logL + p * np.log(N)
                 if lowest_BIC is None or lowest_BIC > BIC:
